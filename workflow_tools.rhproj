@@ -1,0 +1,98 @@
+{
+  "host": {
+    "name": "Rhino3D",
+    "version": "8.13.24267\u002B6002",
+    "os": "macOS",
+    "arch": "arm64"
+  },
+  "id": "2c3d4978-9045-4b57-bc1b-b73d45cfa825",
+  "identity": {
+    "name": "workflow_tools",
+    "version": "0.1-beta",
+    "publisher": {
+      "email": "luis@mcneel.com",
+      "name": "Luis E. Fraguada",
+      "company": "Robert McNeel \u0026 Associates",
+      "country": "Spain",
+      "url": "https://rhino3d.com/"
+    },
+    "description": "A series of tools to enhace our workflow .",
+    "license": "MIT"
+  },
+  "settings": {
+    "buildPath": "build/",
+    "buildTarget": {
+      "host": {
+        "name": "Rhino3D",
+        "version": "8"
+      },
+      "title": "Rhino3D (8.*)",
+      "slug": "rh8"
+    },
+    "publishTarget": {
+      "title": "McNeel Yak Server"
+    }
+  },
+  "codes": [
+    {
+      "id": "a0a051fe-3c38-429b-b0c2-9279ca948a0c",
+      "language": {
+        "id": "*.*.csharp",
+        "version": "*.*.*"
+      },
+      "title": "hello_world",
+      "uri": "src/commands/hello_world.cs"
+    },
+    {
+      "id": "7560344d-5e37-41df-9600-fa4d62471f83",
+      "language": {
+        "id": "*.*.python",
+        "version": "3.*.*"
+      },
+      "title": "hello_world",
+      "uri": "src/commands/hello_world.py"
+    },
+    {
+      "id": "382a0c21-bbb2-4a1a-a62b-29c6213ba03f",
+      "language": {
+        "id": "*.gh1.grasshopper",
+        "version": "1.*.*"
+      },
+      "title": "hello_world",
+      "uri": "src/commands/hello_world.gh"
+    },
+    {
+      "type": "components",
+      "id": "2c3b04da-1133-4f8e-a761-40d4dd624f91",
+      "language": {
+        "id": "*.gh1.grasshopper",
+        "version": "1.*.*"
+      },
+      "title": "hello_world.gh",
+      "uri": "src/commands/hello_world.gh",
+      "scripts": [
+        {
+          "id": "2c3b04da-1133-4f8e-a761-40d4dd624f91",
+          "name": "hello_world.gh",
+          "nickname": "Hw",
+          "description": "Just testing creating a gh component",
+          "subcat": "ACADIA_2024"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "98b70b5a-7972-4af5-bdbc-49ff4a07f2b6",
+      "uri": "README.md"
+    },
+    {
+      "id": "30241398-5215-4f37-93d5-bb7d1265b9bf",
+      "uri": ".github/workflows/workflow_ci.yml"
+    },
+    {
+      "id": "c683f4cc-639d-4e7f-b0db-3926c0723dfe",
+      "uri": ".github/workflows/workflow_deploy.yml"
+    }
+  ]
+}
