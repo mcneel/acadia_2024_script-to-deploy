@@ -7,7 +7,7 @@ This workshop will introduce the Code Editor in Rhino 8 - a new framework design
 
 ## Workshop Tutors
 
-| <img src="docs/img/esther.png" alt="esther" width="150" height="150">  | <img src="docs/img/ivana.png" alt="ivana" width="150" height="150"> | <img src="docs/img/jeffrey.png" alt="jeffrey" width="150" height="150"> | <img src="docs/img/ehsan.png" alt="ehsan" width="150" height="150"> | <img src="docs/img/luis.png" alt="luis" width="150" height="150"> |
+| <img src="docs/img/esther.png" alt="esther" width="100" height="100">  | <img src="docs/img/ivana.png" alt="ivana" width="100" height="100"> | <img src="docs/img/jeffrey.png" alt="jeffrey" width="100" height="100"> | <img src="docs/img/ehsan.png" alt="ehsan" width="100" height="100"> | <img src="docs/img/luis.png" alt="luis" width="100" height="100"> |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | [Esther Rubio Madroñal (Grimshaw)](https://www.linkedin.com/in/esther-rubio-madro%C3%B1al-275776129/) | [Ivana Petrusevski (Grimshaw)](https://www.linkedin.com/in/ivana-petrusevski-77a84b121/) | [Jeffrey Moser (Grimshaw)](https://www.linkedin.com/in/jeffrey-moser-823b39135/) | [Ehsan Iran-Nejad (McNeel)](https://www.linkedin.com/in/eirannejad/) | [Luis E. Fraguada (McNeel)](https://www.linkedin.com/in/fraguada/) |
 
