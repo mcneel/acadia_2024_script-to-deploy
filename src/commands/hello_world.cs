@@ -11,5 +11,5 @@
 using System;
 using Rhino;
 
-Console.WriteLine("Testing CS");
+Console.WriteLine("Hello World!");
 
