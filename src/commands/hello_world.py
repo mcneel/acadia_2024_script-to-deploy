@@ -23,12 +23,16 @@ NOTE:
 """
 #! python3
 
+# r: numpy
+
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import math
+import numpy
 
 import System
 import System.Collections.Generic
 import Rhino
 
 print("Testing py")
+print(str(numpy.abs(100.006789)))

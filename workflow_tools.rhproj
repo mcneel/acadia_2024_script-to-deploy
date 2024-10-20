@@ -79,6 +79,15 @@
           "subcat": "ACADIA_2024"
         }
       ]
+    },
+    {
+      "id": "4f1cd437-d311-4dbb-9697-0f5a3877f031",
+      "language": {
+        "id": "*.*.csharp",
+        "version": "*.*.*"
+      },
+      "title": "layoutGen",
+      "uri": "src/commands/layoutGen.cs"
     }
   ],
   "resources": [
