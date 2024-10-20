@@ -25,9 +25,9 @@ var dHeight = 100;
 for (int i = 0; i < numCells; i ++)
 {
     var objs = doc.Objects.FindByUserString("cell", i.ToString(), false);
-    var filter = new  ObjectEnumeratorSettings();
-    filter.NameFilter = "cell" + i.ToString()
-    var cell = doc.Objects.FindByFilter()
+    //var filter = new  ObjectEnumeratorSettings();
+    //filter.NameFilter = "cell" + i.ToString();
+    //var cell = doc.Objects.FindByFilter();
     
     var numObjs = objs.Length;
     Console.WriteLine("Number of objects: {0}", objs.Length);
