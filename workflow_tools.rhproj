@@ -88,6 +88,33 @@
       },
       "title": "layoutGen",
       "uri": "src/commands/layoutGen.cs"
+    },
+    {
+      "id": "b074b05a-892b-4735-bf80-d14a40935cf4",
+      "language": {
+        "id": "mcneel.ironpython.python",
+        "version": "2.7.12"
+      },
+      "title": "deleteAllUserStrings",
+      "uri": "src/commands/deleteAllUserStrings.py"
+    },
+    {
+      "id": "a15f4228-6960-4195-b81a-43abf64609b4",
+      "language": {
+        "id": "mcneel.gh1.grasshopper",
+        "version": "1.0.*"
+      },
+      "title": "calculateMetrics",
+      "uri": "src/commands/calculateMetrics.gh"
+    },
+    {
+      "id": "8d903c21-6350-49f1-9822-c0760df3b7dd",
+      "language": {
+        "id": "mcneel.roslyn.csharp",
+        "version": "9.0.*"
+      },
+      "title": "deleteAllUserStrings",
+      "uri": "src/commands/deleteAllUserStrings.cs"
     }
   ],
   "resources": [
