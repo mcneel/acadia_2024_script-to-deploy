@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using Rhino;
+using Rhino.FileIO;
 using Rhino.DocObjects;
 using Rhino.Geometry;
 using Rhino.Display;
@@ -26,7 +27,7 @@ namespace WorkflowTools {
             public DisplayModeDescription DisplayMode {get; set;}
         }
 
-        public static bool CreateLayout(RhinoDoc doc, RhinoObject ro, LayoutParams lp)
+        public static void CreateLayout(RhinoDoc doc, RhinoObject ro, LayoutParams lp)
         {
 
             var bb = ro.Geometry.GetBoundingBox(false);
@@ -53,6 +54,7 @@ namespace WorkflowTools {
             txt_oa.LayerIndex = lp.TextLayerIndex; // change to the text layer
 
             // get metrics
+            // Could be abstract by getting var ud = ro.Attributes.GetUserStrings(); and iterating over the collection
             var builtGFA = ro.Attributes.GetUserString("BuiltGFA");
             var landuseGFA = ro.Attributes.GetUserString("LanduseGFA");
             var landuseGFA_uses = landuseGFA.Split(',', StringSplitOptions.None);
@@ -67,6 +69,10 @@ namespace WorkflowTools {
 
             var param_text = "Built GFA: " + builtGFA + " m2";
             param_text += "\n";
+            param_text += "Total GFA: " + totalGFA + " m2";
+            param_text += "\n";
+            param_text += "Ratio: " + ratio + " %";
+            param_text += "\n";
             param_text += "Landuse:";
             param_text += "\n";
 
@@ -77,17 +83,33 @@ namespace WorkflowTools {
                 param_text += "\n";
             }
 
-            param_text += "Total GFA: " + totalGFA + " m2";
-            param_text += "\n";
-            param_text += "Ratio: " + ratio + " %";
-            param_text += "\n";
-
             var param_plane = Plane.WorldXY;
             param_plane.Origin = new Point3d(lp.Margin, (lp.PageHeight - lp.DetailHeight ) - lp.TextHeight * 2 - 10, 0);
             doc.Objects.AddText(param_text, param_plane, lp.TextHeight, lp.FontName, false, false, txt_oa);
 
-            return true;
         }
+
+        public static void PrintLayouts(RhinoDoc doc, string path, int dpi, string[] skip) 
+        {
+            var pdf = FilePdf.Create();
+            var pages = doc.Views.GetPageViews();
+
+            foreach (RhinoPageView page in pages)
+            {
+                // maybe we want to skip some layout?
+                if(Array.IndexOf(skip, page.PageName) > -1)
+                    continue;
+
+                var capture = new ViewCaptureSettings(page, dpi);
+                capture.OutputColor = 0;
+                capture.TextDotPointSize = 8.0;
+                capture.DefaultPrintWidthMillimeters = 0.2;
+                pdf.AddPage(capture);
+            }
+
+            pdf.Write(path);
+
+        } 
     }
 
 }
