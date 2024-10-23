@@ -1,7 +1,5 @@
 // #! csharp
 
-//from https://github.com/mcneel/aectech_2024_scripteditor/blob/main/samples/part3/project/BatchPrinting_Command.cs 
-
 using System;
 using System.IO;
 

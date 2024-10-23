@@ -89,6 +89,7 @@ namespace WorkflowTools {
 
         }
 
+        //from https://github.com/mcneel/aectech_2024_scripteditor/blob/main/samples/part3/project/BatchPrinting_Command.cs 
         public static void PrintLayouts(RhinoDoc doc, string path, int dpi, string[] skip) 
         {
             var pdf = FilePdf.Create();
