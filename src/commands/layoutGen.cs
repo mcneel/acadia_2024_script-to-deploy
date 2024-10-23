@@ -10,6 +10,7 @@
 // #! csharp
 
 using System;
+using System.Collections.Generic;
 
 using Rhino;
 using Rhino.Geometry;
@@ -24,7 +25,7 @@ var margin = 5;
 var dWidth = 100;
 var dHeight = 100;
 
-var zone_param_text_height = 6;
+var zone_param_text_height = 3;
 var zone_param_fontName = "Arial";
 
 var displayMode = Rhino.Display.DisplayModeDescription.FindByName("Rendered_WS");
@@ -63,6 +64,8 @@ if(null == layouts_layer)
 // go through zones
 var zones = doc.Objects.FindByLayer("ZONES");
 Console.WriteLine("Nº of Zones: {0}",zones.Length);
+var bldgs = doc.Objects.FindByUserString("Type", "Building", false);
+Console.WriteLine("Nº of Bldgs: {0}",bldgs.Length);
 
 for (int i = 0; i < zones.Length; i ++) 
 {
@@ -70,10 +73,11 @@ for (int i = 0; i < zones.Length; i ++)
     var zone_name = zone_index.ToString();
     var zone = Array.Find(zones, zone => zone.Name == zone_name); //find the zone with the current name
     var zone_bb = zone.Geometry.GetBoundingBox(false); // get the zone BB
-    
+    zone_bb.Inflate(10);
+        
     var pv = doc.Views.AddPageView("Zone: " + zone_name, width, height); //add page view aka layout
 
-    var detail = pv.AddDetailView("View", new Point2d(margin,height-dHeight), new Point2d(margin+dWidth,height-margin), Rhino.Display.DefinedViewportProjection.Perspective); // add a detail to the layout
+    var detail = pv.AddDetailView("View", new Point2d(margin,height-dHeight), new Point2d(width - margin,height-margin), Rhino.Display.DefinedViewportProjection.Perspective); // add a detail to the layout
     detail.Attributes.LayerIndex = details_layer.Index; // change to detail layer
 
     // edit detail vp
@@ -88,36 +92,44 @@ for (int i = 0; i < zones.Length; i ++)
     // text
     var txt_oa = new Rhino.DocObjects.ObjectAttributes();
     txt_oa.LayerIndex = txt_layer.Index; // change to the text layer
-    doc.Objects.AddTextDot("Zone: " + zone_name, new Point3d(100,100,0), txt_oa );
 
     // get zone data
     var builtGFA = zone.Attributes.GetUserString("BuiltGFA");
     var landuseGFA = zone.Attributes.GetUserString("LanduseGFA");
+    var landuseGFA_uses = landuseGFA.Split(',', StringSplitOptions.None);
     var totalGFA = zone.Attributes.GetUserString("TotalGFA");
     var landuses = zone.Attributes.GetUserString("Landuses");
     var ratio = zone.Attributes.GetUserString("Ratio");
 
-    var builtGFA_plane = Plane.WorldXY;
-    builtGFA_plane.Origin = new Point3d(150, height - 20, 0);
-    var builtGFA_text = "Built GFA: " + builtGFA + " m2";
-    doc.Objects.AddText(builtGFA_text, builtGFA_plane, zone_param_text_height, zone_param_fontName, false, false, txt_oa);
+    var zone_plane = Plane.WorldXY;
+    zone_plane.Origin = new Point3d(margin, (height - dHeight) - zone_param_text_height * 2 , 0);
+    var zone_text = "Zone " + zone_name;
+    doc.Objects.AddText(zone_text, zone_plane, zone_param_text_height * 2, zone_param_fontName, false, false, txt_oa);
 
-    var landuseGFA_plane = Plane.WorldXY;
-    landuseGFA_plane.Origin = new Point3d(150, height - 30, 0);
-    var landuseGFA_text = "Landuse GFA: " + landuseGFA + " m2";
-    doc.Objects.AddText(landuseGFA_text, landuseGFA_plane, zone_param_text_height, zone_param_fontName, false, false, txt_oa);
+    var zone_param_text = "Built GFA: " + builtGFA + " m2";
+    zone_param_text += "\n";
+    zone_param_text += "Landuse:";
+    zone_param_text += "\n";
 
-    var totalGFA_plane = Plane.WorldXY;
-    totalGFA_plane.Origin = new Point3d(150, height - 40, 0);
-    var totalGFA_text = "Total GFA: " + totalGFA + " m2";
-    doc.Objects.AddText(totalGFA_text, totalGFA_plane, zone_param_text_height, zone_param_fontName, false, false, txt_oa);
+    var landuse = landuseGFA.Split(',');
+    for( int j = 0; j < landuse.Length; j ++ )
+    {
+        zone_param_text += "    " + landuse[j] + "m2";
+        zone_param_text += "\n";
+    }
 
-    var ratio_plane = Plane.WorldXY;
-    ratio_plane.Origin = new Point3d(150, height - 50, 0);
-    var ratio_text = "Ratio: " + ratio + " %";
-    doc.Objects.AddText(ratio_text, ratio_plane, zone_param_text_height, zone_param_fontName, false, false, txt_oa);
+    zone_param_text += "Total GFA: " + totalGFA + " m2";
+    zone_param_text += "\n";
+    zone_param_text += "Ratio: " + ratio + " %";
+    zone_param_text += "\n";
+
+    var zone_param_plane = Plane.WorldXY;
+    zone_param_plane.Origin = new Point3d(margin, (height - dHeight) - zone_param_text_height * 2 - 10, 0);
+    doc.Objects.AddText(zone_param_text, zone_param_plane, zone_param_text_height, zone_param_fontName, false, false, txt_oa);
 
     doc.Views.ActiveView = og_activeView; //reset view
+
+    
 
 
 }
