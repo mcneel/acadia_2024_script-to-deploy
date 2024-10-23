@@ -1,5 +1,5 @@
 #! python 2
-
+# https://discourse.mcneel.com/t/deleting-usertext-keys-and-data-from-a-script/54063/8
 import rhinoscriptsyntax as rs
 
 objs = rs.AllObjects()

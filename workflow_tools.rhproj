@@ -117,6 +117,18 @@
       "uri": "src/commands/deleteAllUserStrings.cs"
     }
   ],
+  "libraries": [
+    {
+      "type": "uri",
+      "library": {
+        "base": "src/libraries/layout/",
+        "language": {
+          "id": "*.*.csharp",
+          "version": "*.*.*"
+        }
+      }
+    }
+  ],
   "resources": [
     {
       "id": "98b70b5a-7972-4af5-bdbc-49ff4a07f2b6",
