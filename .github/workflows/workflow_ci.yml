@@ -33,7 +33,7 @@ jobs:
 
     - name: 🛠️ Build rhproj
       run: |
-        rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj -t
+        rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
         Get-ChildItem -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build
 
     - name: 🎁 artifact
