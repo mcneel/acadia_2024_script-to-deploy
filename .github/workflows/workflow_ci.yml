@@ -38,4 +38,5 @@ jobs:
 
     - name: 🛠️ Build rhproj
       run: |
+        ls
         rhinocode project build workflow_tools.rhproj
