@@ -34,7 +34,7 @@ jobs:
 
     - name: ✍️ Add to PATH
       run: |
-        echo "%PROGRAMFILES%\Rhino 8\System" >> "$GITHUB_PATH"
+        echo "C:\Program Files\Rhino 8\System" >> "$GITHUB_PATH"
         $env:PATH
 
     - name: 🛠️ Build rhproj
