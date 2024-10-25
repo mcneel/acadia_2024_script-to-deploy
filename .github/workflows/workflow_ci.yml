@@ -44,4 +44,4 @@ jobs:
     - name: 🎁 artifact
       uses: actions/upload-artifact@v4.3.1
         with:
-          path: build
+          path: D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build
