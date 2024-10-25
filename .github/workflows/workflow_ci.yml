@@ -35,9 +35,7 @@ jobs:
     - name: ✍️ Add to PATH
       run: |
         "C:\Program Files\Rhino 8\System" >> $env:GITHUB_PATH
-        $env:PATH
 
     - name: 🛠️ Build rhproj
       run: |
-        $env:PATH
-        rhinocode -V
+        rhinocode project build workflow_tools.rhproj
