@@ -9,7 +9,7 @@ on: [push, pull_request]
 
 env:
   RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }}
-  RHINO_PATH: "%PROGRAMFILES%\Rhino 8\System"
+  RHINO_PATH: ${{ '%PROGRAMFILES%\Rhino 8\System' }}
 
 jobs:
   build:
