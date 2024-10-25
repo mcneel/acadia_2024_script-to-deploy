@@ -19,7 +19,7 @@ jobs:
     steps:
 
     - name: 🛒 Checkout src
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4.4.3
 
     - name: 🦏 Install Rhino
       uses: mcneel/setup-rhino3d@v1.0.0
@@ -35,8 +35,9 @@ jobs:
       id: buildproj
       run: |
         rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
-        Get-ChildItem -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
-        $file=(Get-Item D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8 -Include "*.yak")
+        Get-ChildItem D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8 -Include "*.yak"
+        $file=(Get-ChildItem D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8 -Include "*.yak")
+        echo $file.Name
         "file=$file.Name" >> $GITHUB_OUTPUT
 
     - name: 🎁 artifact
