@@ -35,8 +35,9 @@ jobs:
       id: buildproj
       run: |
         rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
-        Get-ChildItem D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
-        $file=(Get-ChildItem D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8 -Include "*.yak")
+        Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
+        Get-ChildItem workflow_tools-*.yak
+        $file=(Get-ChildItem workflow_tools-*.yak)
         $file.Name
         "file=$file.Name" >> $GITHUB_OUTPUT
 
