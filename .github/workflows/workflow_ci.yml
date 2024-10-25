@@ -11,11 +11,13 @@ env:
   RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }}
 
 jobs:
+
   build:
 
     runs-on: windows-latest
 
     steps:
+
     - name: 🛒 Checkout src
       uses: actions/checkout@v3
 
@@ -33,7 +35,9 @@ jobs:
     - name: ✍️ Add to PATH
       run: |
         Add-Content $env:GITHUB_PATH "%PROGRAMFILES%\Rhino 8\System"
+        $env:PATH
 
     - name: 🛠️ Build rhproj
       run: |
+        $env:PATH
         rhinocode -V
