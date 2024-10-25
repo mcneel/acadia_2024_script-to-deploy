@@ -34,7 +34,7 @@ jobs:
 
     - name: ✍️ Add to PATH
       run: |
-        Add-Content $env:GITHUB_PATH "%PROGRAMFILES%\Rhino 8\System"
+        echo "%PROGRAMFILES%\Rhino 8\System" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         $env:PATH
 
     - name: 🛠️ Build rhproj
