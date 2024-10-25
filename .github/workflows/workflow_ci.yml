@@ -9,7 +9,6 @@ on: [push, pull_request]
 
 env:
   RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }}
-  RHINO_PATH: ${{ '%PROGRAMFILES%\Rhino 8\System' }}
 
 jobs:
   build:
@@ -30,6 +29,10 @@ jobs:
       id: setup_rhino
       with:
         email-address: ${{ secrets.EMAIL_ADDRESS }}
+
+    - name: ✍️ Add to PATH
+      run: |
+        Add-Content $env:GITHUB_PATH "%PROGRAMFILES%\Rhino 8\System"
 
     - name: 🛠️ Build rhproj
       run: |
