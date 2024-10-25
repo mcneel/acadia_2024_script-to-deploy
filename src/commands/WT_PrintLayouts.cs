@@ -3,11 +3,9 @@
 using System;
 using System.IO;
 
-using Rhino;
-
 using WorkflowTools;
 
-var doc = RhinoDoc.ActiveDoc;
+var doc = Rhino.RhinoDoc.ActiveDoc;
 
 var sfd = new Rhino.UI.SaveFileDialog();
 sfd.DefaultExt = ".pdf";

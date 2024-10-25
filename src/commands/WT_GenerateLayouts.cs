@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Rhino;
 using Rhino.Geometry;
@@ -22,9 +23,11 @@ var doc = RhinoDoc.ActiveDoc;
 
 // layout parameters
 
-var displayMode = Rhino.Display.DisplayModeDescription.FindByName("Rendered_WS");
-if( null == displayMode)
-    displayMode = Rhino.Display.DisplayModeDescription.FindByName("Rendered");
+var activeDisplayMode = Rhino.Display.DisplayModeDescription.FindByName("Rendered_WS");
+if( null == activeDisplayMode)
+    activeDisplayMode = Rhino.Display.DisplayModeDescription.FindByName("Rendered");
+
+var hiddenDisplayMode = Rhino.Display.DisplayModeDescription.FindByName("Arctic_WS");
 
 //keep the view you had before starting the script
 var og_activeView = doc.Views.ActiveView;
@@ -65,7 +68,9 @@ var layout_params = new LayoutTools.LayoutParams {
     DetailsLayerIndex = details_layer.Index,
     TextLayerIndex = txt_layer.Index,
     FontName = "Arial",
-    DisplayMode = displayMode
+    ActiveDisplayMode = activeDisplayMode,
+    HiddenDisplayMode = hiddenDisplayMode
+
 };
 
 // collect objects
@@ -73,8 +78,9 @@ var zones = doc.Objects.FindByLayer("ZONES");
 Console.WriteLine("Nº of Zones: {0}",zones.Length);
 var plots = doc.Objects.FindByLayer("PLOTS");
 Console.WriteLine("Nº of Plots: {0}",plots.Length);
-var bldgs = doc.Objects.FindByLayer("BUILDING PADS");
-Console.WriteLine("Nº of Bldgs: {0}",bldgs.Length);
+var bldg_pads = doc.Objects.FindByLayer("BUILDING PADS");
+Console.WriteLine("Nº of Bldg Pads: {0}",bldg_pads.Length);
+var bldg_parts = doc.Objects.FindByObjectType(ObjectType.Extrusion);
 
 for (int i = 0; i < zones.Length; i ++) 
 {
@@ -84,14 +90,25 @@ for (int i = 0; i < zones.Length; i ++)
     Console.WriteLine("--- Zone {0} ---",zone_name);
     var zone = Array.Find(zones, zone => zone.Name == zone_name); //find the zone with the current name
 
-    LayoutTools.CreateLayout(doc, zone, layout_params);
+    var plots_out_zone = Array.FindAll(plots, p => p.Name[0].ToString() != zone_name);
+    Console.WriteLine("Plots not in Zone: {0}", plots_out_zone.Length);
+    var bldgs_out_zone = Array.FindAll(bldg_parts, b => b.Name[0].ToString() != zone_name);
+    Console.WriteLine("Buildings not in Zone: {0}", bldgs_out_zone.Length);
+    var objs = plots_out_zone.Concat(bldgs_out_zone).ToArray();
+    Console.WriteLine("Objects not in Zone: {0}", objs.Length);
+
+    LayoutTools.CreateLayout(doc, zone, bldg_parts, layout_params);
 
     var zone_plots = Array.FindAll(plots, plot => plot.Name.StartsWith(zone_name));
     Console.WriteLine("Nº Plots in Zone {0}: {1}",zone_name, zone_plots.Length);
 
     // PLOTS
-    foreach (var plot in zone_plots)
-        LayoutTools.CreateLayout(doc, plot, layout_params);
+    foreach (var plot in zone_plots) 
+    {
+        var bldgs_out_plot = Array.FindAll(bldg_parts, b => !b.Name.StartsWith(plot.Name));
+        Console.WriteLine("Buildings not in Plot; {0}", bldgs_out_plot.Length);
+        LayoutTools.CreateLayout(doc, plot, bldg_parts, layout_params);
+    }
 
     doc.Views.ActiveView = og_activeView; //reset view
 

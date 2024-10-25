@@ -1,6 +1,7 @@
 // #! csharp
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Rhino;
 using Rhino.FileIO;
@@ -24,14 +25,23 @@ namespace WorkflowTools {
             public int DetailsLayerIndex {get; set;}
             public int TextLayerIndex {get; set;}
             public string FontName {get; set;}
-            public DisplayModeDescription DisplayMode {get; set;}
+            public DisplayModeDescription ActiveDisplayMode {get; set;}
+            public DisplayModeDescription HiddenDisplayMode {get; set;}
         }
 
-        public static void CreateLayout(RhinoDoc doc, RhinoObject ro, LayoutParams lp)
+        //TODO: Change other object display modes in detail? https://developer.rhino3d.com/api/rhinocommon/rhino.docobjects.objectattributes/setdisplaymodeoverride
+        //TODO: Hide objects in detail? https://developer.rhino3d.com/api/rhinocommon/rhino.docobjects.objectattributes/addhideindetailoverride#(guid)
+        public static void CreateLayout(RhinoDoc doc, RhinoObject ro, RhinoObject[] ros, LayoutParams lp)
         {
 
+            var obj_out = Array.FindAll(ros, o => !o.Name.StartsWith(ro.Name));
+            var obj_in = Array.FindAll(ros, o => o.Name.StartsWith(ro.Name));
+
             var bb = ro.Geometry.GetBoundingBox(false);
-            bb.Inflate(10);
+            foreach (var obj in obj_in)
+                bb.Union(obj.Geometry.GetBoundingBox(false));
+
+            bb.Inflate(2);
 
             var type = ro.Attributes.GetUserString("Type");
             var name = ro.Name;
@@ -45,9 +55,32 @@ namespace WorkflowTools {
             // edit detail vp
             var vp = detail.Viewport;
             vp.ChangeToParallelProjection(true);
-            vp.DisplayMode = lp.DisplayMode;
+            vp.DisplayMode = lp.ActiveDisplayMode;
             vp.ZoomBoundingBox(bb);
             detail.CommitViewportChanges();
+            var vp_id = vp.Id;
+
+            var detail_map = pv.AddDetailView("Map", new Point2d(lp.PageWidth-lp.Margin-100, lp.Margin), new Point2d( lp.PageWidth - lp.Margin, 100 + lp.Margin ), Rhino.Display.DefinedViewportProjection.Top); // add a detail to the layout
+            detail_map.Attributes.LayerIndex = lp.DetailsLayerIndex; // change to detail layer
+
+            var vp_map = detail_map.Viewport;
+            vp_map.ChangeToParallelProjection(true);
+            vp_map.DisplayMode = lp.ActiveDisplayMode;
+            vp_map.ZoomExtents();
+            detail_map.CommitViewportChanges();
+            var vp_map_id = vp_map.Id;
+
+            //shade other objects with secondary style
+            foreach (var obj in obj_out) 
+            {
+                
+                obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_id);
+                obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_map_id);
+                //var dmo = obj.Attributes.HasDisplayModeOverride(vp_id);
+                //var uuid = obj.Attributes.GetDisplayModeOverride(vp_id);
+                //Console.WriteLine("{0} has DMO? {1}, {2}",obj.ObjectType, dmo, uuid);
+                obj.CommitChanges();
+            }
 
             // text
             var txt_oa = new Rhino.DocObjects.ObjectAttributes();
@@ -77,11 +110,24 @@ namespace WorkflowTools {
             param_text += "\n";
 
             var landuse = landuseGFA.Split(',');
+            //var landuseDict = new Dictionary<string, int[]>();
+            //int.TryParse(builtGFA, out int builtm2);
             for( int j = 0; j < landuse.Length; j ++ )
             {
                 param_text += "    " + landuse[j] + "m2";
                 param_text += "\n";
+                
+                // create dictionary for pie chart
+/*
+                var parts = landuse[j].Split(':', StringSplitOptions.None);
+                int.TryParse(parts[1], out int m2);
+                var percentTotal = (int)System.Math.Round( (double)((m2/builtm2) * 100));
+                landuseDict.Add(parts[0], new []{m2, percentTotal});
+                */
             }
+
+           // var ordered = landuseDict.OrderBy(x => x.Value[1]);
+
 
             var param_plane = Plane.WorldXY;
             param_plane.Origin = new Point3d(lp.Margin, (lp.PageHeight - lp.DetailHeight ) - lp.TextHeight * 2 - 10, 0);
