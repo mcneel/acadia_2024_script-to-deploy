@@ -19,7 +19,7 @@ jobs:
     steps:
 
     - name: 🛒 Checkout src
-      uses: actions/checkout@v4.4.3
+      uses: actions/checkout@v4.2.2
 
     - name: 🦏 Install Rhino
       uses: mcneel/setup-rhino3d@v1.0.0
