@@ -35,12 +35,9 @@ jobs:
       id: buildproj
       run: |
         rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
-        Get-ChildItem -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
-        $file=(Get-Item D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8 -Include "*.3dm")
-        "file=$file.Name" >> $GITHUB_OUTPUT
 
     - name: 🎁 artifact
       uses: actions/upload-artifact@v4.4.3
       with:
         path: D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8\workflow_tools*.yak
-        name: ${{ steps.buildproj.outputs.file }}
+        name: workflow-tools
