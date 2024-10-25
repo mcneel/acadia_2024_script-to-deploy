@@ -38,5 +38,5 @@ jobs:
 
     - name: 🛠️ Build rhproj
       run: |
-        ls
         rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
+        ls
