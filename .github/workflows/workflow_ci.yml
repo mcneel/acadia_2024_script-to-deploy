@@ -37,7 +37,7 @@ jobs:
         rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
         Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
         Get-ChildItem workflow_tools-*.yak
-        $path=(Get-ChildItem workflow_tools-*.yak).Name
+        $path=(Get-ChildItem workflow_tools-*.yak)
         $file=$path.Name
         "file=$file" >> $env:GITHUB_OUTPUT
         "path=$path" >> $env:GITHUB_OUTPUT
