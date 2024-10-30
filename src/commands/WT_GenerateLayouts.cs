@@ -28,6 +28,8 @@ if( null == activeDisplayMode)
     activeDisplayMode = Rhino.Display.DisplayModeDescription.FindByName("Rendered");
 
 var hiddenDisplayMode = Rhino.Display.DisplayModeDescription.FindByName("Arctic_WS");
+if( null == hiddenDisplayMode)
+    hiddenDisplayMode = Rhino.Display.DisplayModeDescription.FindByName("Arctic");
 
 //keep the view you had before starting the script
 var og_activeView = doc.Views.ActiveView;
