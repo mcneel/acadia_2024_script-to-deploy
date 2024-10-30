@@ -163,6 +163,15 @@
           }
         }
       }
+    },
+    {
+      "id": "812cbaa4-7405-469d-9f0e-b31589125a71",
+      "language": {
+        "id": "mcneel.pythonnet.python",
+        "version": "3.9.10"
+      },
+      "title": "WT_DeleteLayouts",
+      "uri": "src/commands/WT_DeleteLayouts.py"
     }
   ],
   "libraries": [
