@@ -41,6 +41,10 @@ jobs:
         $file.Name
         "file=$file.Name" >> $GITHUB_OUTPUT
 
+    - name: verify that name exists
+      run: |
+        echo ${{ steps.buildproj.outputs.file }}
+
     - name: 🎁 artifact
       uses: actions/upload-artifact@v4.4.3
       with:
