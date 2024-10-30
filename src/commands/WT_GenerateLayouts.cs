@@ -82,6 +82,10 @@ var layout_params = new LayoutTools.LayoutParams {
 // collect objects
 var zones = doc.Objects.FindByLayer("ZONES");
 Console.WriteLine("Nº of Zones: {0}",zones.Length);
+
+// very simple check to see if we've added user strings to objects
+if(zones[0].Attributes.UserStringCount == 0) return;
+
 var plots = doc.Objects.FindByLayer("PLOTS");
 Console.WriteLine("Nº of Plots: {0}",plots.Length);
 var bldg_pads = doc.Objects.FindByLayer("BUILDING PADS");
