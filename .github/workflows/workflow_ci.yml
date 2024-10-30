@@ -39,7 +39,7 @@ jobs:
         Get-ChildItem workflow_tools-*.yak
         $file=(Get-ChildItem workflow_tools-*.yak)
         $file.Name
-        "file=$file.Name" >> $GITHUB_OUTPUT
+        "file=$file.Name" >> $env:GITHUB_OUTPUT
 
     - name: verify that name exists
       run: |
