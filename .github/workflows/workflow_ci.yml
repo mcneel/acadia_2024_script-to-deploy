@@ -37,16 +37,18 @@ jobs:
         rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
         Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
         Get-ChildItem workflow_tools-*.yak
-        $file=(Get-ChildItem workflow_tools-*.yak)
-        $file.Name
-        "file=$file.Name" >> $env:GITHUB_OUTPUT
+        $path=(Get-ChildItem workflow_tools-*.yak).Name
+        $file=$path.Name
+        "file=$file" >> $env:GITHUB_OUTPUT
+        "path=$path" >> $env:GITHUB_OUTPUT
 
     - name: verify that name exists
       run: |
         echo ${{ steps.buildproj.outputs.file }}
+        echo ${{ steps.buildproj.outputs.path }}
 
     - name: 🎁 artifact
       uses: actions/upload-artifact@v4.4.3
       with:
-        path: D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8\workflow_tools*.yak
+        path: ${{ steps.buildproj.outputs.path }}
         name: ${{ steps.buildproj.outputs.file }}
