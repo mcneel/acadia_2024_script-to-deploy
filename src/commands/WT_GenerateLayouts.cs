@@ -10,6 +10,7 @@
 // #! csharp
 
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +19,9 @@ using Rhino.Geometry;
 using Rhino.DocObjects;
 
 using WorkflowTools;
+
+// create and start a Stopwatch instance
+Stopwatch stopwatch = Stopwatch.StartNew();
 
 var doc = RhinoDoc.ActiveDoc;
 
@@ -108,10 +112,12 @@ for (int i = 0; i < zones.Length; i ++)
     foreach (var plot in zone_plots) 
     {
         var bldgs_out_plot = Array.FindAll(bldg_parts, b => !b.Name.StartsWith(plot.Name));
-        Console.WriteLine("Buildings not in Plot; {0}", bldgs_out_plot.Length);
+        Console.WriteLine("Buildings not in Plot: {0}", bldgs_out_plot.Length);
         LayoutTools.CreateLayout(doc, plot, bldg_parts, layout_params);
     }
 
-    doc.Views.ActiveView = og_activeView; //reset view
+    //doc.Views.ActiveView = og_activeView; //reset view
+    stopwatch.Stop();
+    Console.WriteLine("Time to generate layouts (ms): ",stopwatch.ElapsedMilliseconds);
 
 }

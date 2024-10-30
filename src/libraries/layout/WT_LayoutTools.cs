@@ -47,7 +47,7 @@ namespace WorkflowTools {
             var name = ro.Name;
 
             var pv = doc.Views.AddPageView(type + ": " + name, lp.PageWidth, lp.PageHeight); //add page view aka layout
-            doc.Views.ActiveView = pv; //switch the active view to the layout so new objects land here
+            //doc.Views.ActiveView = pv; //switch the active view to the layout so new objects land here
 
             var detail = pv.AddDetailView("View", new Point2d(lp.Margin, lp.PageHeight - lp.DetailHeight), new Point2d( lp.PageWidth - lp.Margin, lp.PageHeight - lp.Margin ), Rhino.Display.DefinedViewportProjection.Perspective); // add a detail to the layout
             detail.Attributes.LayerIndex = lp.DetailsLayerIndex; // change to detail layer
@@ -73,18 +73,16 @@ namespace WorkflowTools {
             //shade other objects with secondary style
             foreach (var obj in obj_out) 
             {
-                
                 obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_id);
                 obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_map_id);
-                //var dmo = obj.Attributes.HasDisplayModeOverride(vp_id);
-                //var uuid = obj.Attributes.GetDisplayModeOverride(vp_id);
-                //Console.WriteLine("{0} has DMO? {1}, {2}",obj.ObjectType, dmo, uuid);
                 obj.CommitChanges();
             }
 
             // text
             var txt_oa = new Rhino.DocObjects.ObjectAttributes();
             txt_oa.LayerIndex = lp.TextLayerIndex; // change to the text layer
+            txt_oa.Space = ActiveSpace.PageSpace;
+            txt_oa.ViewportId = pv.MainViewport.Id;
 
             // get metrics
             // Could be abstract by getting var ud = ro.Attributes.GetUserStrings(); and iterating over the collection
