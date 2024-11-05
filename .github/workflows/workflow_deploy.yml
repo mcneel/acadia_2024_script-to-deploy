@@ -13,20 +13,29 @@ env:
 
 jobs:
 
-  build:
+  check:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
 
     - name: ✅ Check if we have YAK_TOKEN
       run: |
+        echo "Hello World!"
         if [ -z "${env.YAK_TOKEN}" ]; then
             echo "YAK_TOKEN not set or empty"
             exit 1
         else
-            echo "YAK_TOKEN set!"
+            echo "YAK_TOKEN set and not empty"
         fi
+
+  build:
+
+    runs-on: windows-latest
+
+    needs: check
+
+    steps:
 
     - name: 🛒 Checkout src
       uses: actions/checkout@v4.2.2
