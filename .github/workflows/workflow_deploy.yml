@@ -22,7 +22,7 @@ jobs:
     - name: ✅ Check if we have YAK_TOKEN
       run: |
         echo "Hello World!"
-        if [ -z "${env.YAK_TOKEN}" ]; then
+        if [ -z "${{env.YAK_TOKEN}}" ]; then
             echo "YAK_TOKEN not set or empty"
             exit 1
         else
