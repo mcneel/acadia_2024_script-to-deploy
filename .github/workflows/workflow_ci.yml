@@ -8,7 +8,8 @@ name: CI
 on: [push, pull_request]
 
 env:
-  RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }}
+  # RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }} # not needed
+  RETENTION_DAYS: 15
 
 jobs:
 
@@ -47,3 +48,4 @@ jobs:
       with:
         path: ${{ steps.buildproj.outputs.path }}
         name: ${{ steps.buildproj.outputs.file }}
+        retention-days: ${{ env.RETENTION_DAYS }}

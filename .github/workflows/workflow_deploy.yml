@@ -7,9 +7,59 @@
 name: Deploy
 on: workflow_dispatch
 
+env:
+  RETENTION_DAYS: 15
+  YAK_TOKEN: ${{ secrets.YAK_TOKEN }}
+
 jobs:
+
   build:
-    runs-on: ubuntu-latest
+
+    runs-on: windows-latest
+
     steps:
-    - name: Say Hello
-      run: echo "Hello, World!"
+
+    - name: ✅ Check if we have YAK_TOKEN
+      run: |
+        if [ -z "${env.YAK_TOKEN}" ]; then
+            echo "YAK_TOKEN not set or empty"
+            exit 1
+        else
+            echo "YAK_TOKEN set!"
+        fi
+
+    - name: 🛒 Checkout src
+      uses: actions/checkout@v4.2.2
+
+    - name: 🦏 Install Rhino
+      uses: mcneel/setup-rhino3d@v1.0.0
+      id: setup_rhino
+      with:
+        email-address: ${{ secrets.EMAIL_ADDRESS }}
+
+    - name: ✍️ Add to PATH
+      run: |
+        "C:\Program Files\Rhino 8\System" >> $env:GITHUB_PATH
+
+    - name: 🛠️ Build rhproj
+      id: buildproj
+      run: |
+        rhinocode project build D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\workflow_tools.rhproj
+        Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
+        Get-ChildItem workflow_tools-*.yak
+        $path=(Get-ChildItem workflow_tools-*.yak)
+        $file=$path.Name
+        "file=$file" >> $env:GITHUB_OUTPUT
+        "path=$path" >> $env:GITHUB_OUTPUT
+
+    - name: 🎁 artifact
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        path: ${{ steps.buildproj.outputs.path }}
+        name: ${{ steps.buildproj.outputs.file }}
+        retention-days: ${{ env.RETENTION_DAYS }}
+
+    - name: 🚢 push to yak
+      run: |
+        Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\build\rh8
+        yak push ${{ steps.buildproj.outputs.file }}
