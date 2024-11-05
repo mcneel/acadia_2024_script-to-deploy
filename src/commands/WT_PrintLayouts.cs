@@ -8,6 +8,7 @@ using WorkflowTools;
 var doc = Rhino.RhinoDoc.ActiveDoc;
 
 var sfd = new Rhino.UI.SaveFileDialog();
+sfd.Title = "Where do you want to save the PDF?";
 sfd.DefaultExt = ".pdf";
 sfd.Filter = ".pdf";
 sfd.FileName = ".pdf";

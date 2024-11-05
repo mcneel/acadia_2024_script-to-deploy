@@ -172,6 +172,15 @@
       },
       "title": "WT_DeleteLayouts",
       "uri": "src/commands/WT_DeleteLayouts.py"
+    },
+    {
+      "id": "1314eddd-97c6-4aab-82fe-5928e943a8f8",
+      "language": {
+        "id": "mcneel.gh1.grasshopper",
+        "version": "1.0.*"
+      },
+      "title": "WT_ExportToCSV",
+      "uri": "src/commands/WT_ExportToCSV.gh"
     }
   ],
   "libraries": [

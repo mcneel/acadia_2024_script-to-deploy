@@ -92,6 +92,10 @@ var bldg_pads = doc.Objects.FindByLayer("BUILDING PADS");
 Console.WriteLine("Nº of Bldg Pads: {0}",bldg_pads.Length);
 var bldg_parts = doc.Objects.FindByObjectType(ObjectType.Extrusion);
 
+// remove overrides so these do not keep accumulating in project
+foreach (var ro in bldg_parts)
+    ro.Attributes.RemoveDisplayModeOverride();
+
 doc.Views.EnableRedraw(false, false, false);
 
 for (int i = 0; i < zones.Length; i ++) 
@@ -125,6 +129,6 @@ for (int i = 0; i < zones.Length; i ++)
     //doc.Views.ActiveView = og_activeView; //reset view
     doc.Views.EnableRedraw(true, true, true);
     stopwatch.Stop();
-    Console.WriteLine("Time to generate layouts (ms): ",stopwatch.ElapsedMilliseconds);
+    Console.WriteLine("Time to generate layouts: {0} ms",stopwatch.ElapsedMilliseconds);
 
 }

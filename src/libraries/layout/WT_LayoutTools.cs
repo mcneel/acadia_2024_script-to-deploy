@@ -71,11 +71,13 @@ namespace WorkflowTools {
             var vp_map_id = vp_map.Id;
 
             //shade other objects with secondary style
-            foreach (var obj in obj_out) 
-            {
-                obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_id);
-                obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_map_id);
-                obj.CommitChanges();
+            if( !Rhino.Runtime.HostUtils.RunningOnWindows ) {
+                foreach (var obj in obj_out) 
+                {
+                    obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_id);
+                    obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_map_id);
+                    obj.CommitChanges(); // <---- Very slow on windows
+                }
             }
 
             // text
