@@ -21,6 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Rhino.Runtime.Code" HintPath="$(RhinoSystemDirectory)\Rhino.Runtime.Code.dll" Private="True" />
+    <Reference Include="RhinoCodePlatform.Rhino3D" HintPath="$(RhinoSystemDirectory)\RhinoCodePlatform.Rhino3D.dll" Private="False" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Rhino.Testing.Configs.xml" CopyToOutputDirectory="always" />
   </ItemGroup>
 </Project>
