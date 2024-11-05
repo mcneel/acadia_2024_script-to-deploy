@@ -1,4 +1,9 @@
 // #! csharp
+
+/*
+    This is a small library that includes the main functionality for the WT_GenerateLayouts and WT_PrintLayouts command. 
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +34,9 @@ namespace WorkflowTools {
             public DisplayModeDescription HiddenDisplayMode {get; set;}
         }
 
-        //TODO: Change other object display modes in detail? https://developer.rhino3d.com/api/rhinocommon/rhino.docobjects.objectattributes/setdisplaymodeoverride
-        //TODO: Hide objects in detail? https://developer.rhino3d.com/api/rhinocommon/rhino.docobjects.objectattributes/addhideindetailoverride#(guid)
+        /*
+            Main functionality for WT_GenerateLayouts command.
+        */
         public static void CreateLayout(RhinoDoc doc, RhinoObject ro, RhinoObject[] ros, LayoutParams lp)
         {
 
@@ -71,13 +77,11 @@ namespace WorkflowTools {
             var vp_map_id = vp_map.Id;
 
             //shade other objects with secondary style
-            if( !Rhino.Runtime.HostUtils.RunningOnWindows ) {
-                foreach (var obj in obj_out) 
-                {
-                    obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_id);
-                    obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_map_id);
-                    obj.CommitChanges(); // <---- Very slow on windows
-                }
+            foreach (var obj in obj_out) 
+            {
+                obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_id);
+                obj.Attributes.SetDisplayModeOverride(lp.HiddenDisplayMode, vp_map_id);
+                obj.CommitChanges(); // <---- Very slow on windows if there is a lot of override data on objects. Use WT_RemoveObjectDisplayModeOcerrides.cs
             }
 
             // text
@@ -118,7 +122,7 @@ namespace WorkflowTools {
                 param_text += "\n";
                 
                 // create dictionary for pie chart
-/*
+                /*
                 var parts = landuse[j].Split(':', StringSplitOptions.None);
                 int.TryParse(parts[1], out int m2);
                 var percentTotal = (int)System.Math.Round( (double)((m2/builtm2) * 100));
@@ -136,6 +140,9 @@ namespace WorkflowTools {
         }
 
         //from https://github.com/mcneel/aectech_2024_scripteditor/blob/main/samples/part3/project/BatchPrinting_Command.cs 
+        /*
+            Main functionality for WT_PrintLayouts command.
+        */
         public static void PrintLayouts(RhinoDoc doc, string path, int dpi, string[] skip) 
         {
             var pdf = FilePdf.Create();

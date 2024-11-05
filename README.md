@@ -12,7 +12,28 @@ This workshop will introduce the Code Editor in Rhino 8 - a new framework design
 | [Esther Rubio Madroñal (Grimshaw)](https://www.linkedin.com/in/esther-rubio-madro%C3%B1al-275776129/) | [Ivana Petrusevski (Grimshaw)](https://www.linkedin.com/in/ivana-petrusevski-77a84b121/) | [Jeffrey Moser (Grimshaw)](https://www.linkedin.com/in/jeffrey-moser-823b39135/) | [Ehsan Iran-Nejad (McNeel)](https://www.linkedin.com/in/eirannejad/) | [Luis E. Fraguada (McNeel)](https://www.linkedin.com/in/fraguada/) |
 
 ​
+## Project
 
+The scripts and definitions in this repository are a collection of tools we've developed to show off the functionality of the new Rhino ScriptEditor. We have used python, csharp, and gh definitons to create the commands.
+
+The toolkit contains the following scripts:
+
+- [**WT_CalculateMetrics.gh**](src/commands/WT_CalculateMetrics.gh) - This GH definition reads obejcts from the current model, organizes them, calculates certain metrics like GFA, and then populates the object's user strings with these metrics. Finally the objects are updated in the Rhino model.
+- [**WT_GenerateLayouts.cs**](src/commands/WT_GenerateLayouts.cs) - This script generates a layout with two details for each Zone and Plot in the reference 3d model. Some of the functionality of this script is referenced from a library called [WT_LayoutTools.cs](src/libraries/layout/WT_LayoutTools.cs)
+- [**WT_ExportCSV.gh**](src/commands/WT_ExportToCSV.gh) - This GH definition exports a csv file with the object user strings from the reference model.
+- [**WT_PrintLayouts.cs**](src/commands/WT_PrintLayouts.cs) - This script prints all of the existing layouts in the current file to one PDF. Depends on functionality in [WT_LayoutTools.cs](src/libraries/layout/WT_LayoutTools.cs) 
+- [**WT_LayoutTools**](src/libraries/layout/WT_LayoutTools.cs) - A library containing some of the functionality used by the scripts in the toolkit.
+- [**WT_DeleteAllUserStrings.py**](src/commands/WT_DeleteAllUserStrings.py) - As the name suggests, this script deletes all of the user strings on all of the objects in the current model.
+- [**WT_DeleteLayouts.py**](src/commands/WT_DeleteLayouts.py) - This script deletes all of the existing layouts in the current model.
+- [**WT_RemoveObjectDisplayModeOverrides.cs**](src/commands/WT_RemoveObjectDisplayModeOverrides.cs) - We found that as we were working on the reference model, objects were accumulating DisplayModeOverrides from the WT_GenerateLayouts script and generating layouts became very slow on Windows. This deletes any Display Mode Overrides from all objects in the current model
+
+Additionally, there are a few other files of interest in the repository:
+
+- [**ref/24.11.05_MasterplanBuildings_Start.3dm.zip**](ref/24.11.05_MasterplanBuildings_Start.3dm.zip) - The reference model we will use for demonstrating how the toolkit works.
+- [**ref/Rendered_WS.ini**](ref/Rendered_WS.ini) - The display mode for focused objects in layout details.
+- [**ref/Arctic_WS.ini**](ref/Arctic_WS.ini) - The display mode override for objects not in focus in layout details.
+- [**.github/workflows/workflow_ci.yml**](.github/workflows/workflow_ci.yml) - The workflow file describing the actions to take on each push or pull request to this repository. Each time there is a new commit, this workflow runs and the result is a yak package artifact. 
+- [**.github/workflows/workflow_deploy.yml**](.github/workflows/workflow_deploy.yml) - The workflow file describing the actions to take when we want to deploy this package to the public Package Manager. This workflow is activated on the push of a button. 
 ​
 
 ​
