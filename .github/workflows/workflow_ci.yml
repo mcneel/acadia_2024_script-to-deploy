@@ -46,7 +46,8 @@ jobs:
     - name: 🧪 test
       run: |
         Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\tests
-        dotnet test --verbosity normal --framework -f "net7.0-windows"
+        dotnet build --framework "net7.0-windows"
+        dotnet test --no-build --verbosity normal --framework "net7.0-windows"
 
     - name: 🎁 artifact
       uses: actions/upload-artifact@v4.4.3
