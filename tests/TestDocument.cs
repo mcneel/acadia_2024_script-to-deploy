@@ -29,18 +29,18 @@ namespace WorkflowToolsNUnitTests
 
             string modelPath = Path.Combine(filesPath, @"24.11.05_MasterplanBuildings_Start.3dm");
 
-            Assert.IsTrue(File.Exists(modelPath));
-            Assert.DoesNotThrow(() => RhinoDoc.Open(modelPath, out bool _));
+            Assert.IsTrue(File.Exists(modelPath), "Does the sample model exist?");
+            Assert.DoesNotThrow(() => RhinoDoc.Open(modelPath, out bool _), "Does Rhino open the sample model?");
 
             var doc = RhinoDoc.ActiveDoc;
             var hatches = doc.Objects.FindByObjectType(Rhino.DocObjects.ObjectType.Hatch);
             var hatch = hatches[0];
             var userStringCount = hatch.Attributes.GetUserStrings().Count;
 
-            Assert.AreEqual(0, userStringCount);
-            Assert.DoesNotThrow(() => RhinoApp.RunScript("WT_CalculateMetrics", false));
+            Assert.AreEqual(0, userStringCount, "Does the sample model have user strings before Calculate Metrics?");
+            Assert.DoesNotThrow(() => RhinoApp.RunScript("WT_CalculateMetrics", false), "Does WT_CalculateMetrics run without error?");
             //Assert.DoesNotThrow(() => RhinoApp.InvokeOnUiThread(new Action(() => RhinoApp.RunScript("WT_CalculateMetrics", false))));
-            Assert.IsTrue(hatch.Attributes.GetUserStrings().Count > 0);
+            Assert.IsTrue(hatch.Attributes.GetUserStrings().Count > 0, "Does the sample model have user strings after Calculate Metrics?");
 
         }
     }
