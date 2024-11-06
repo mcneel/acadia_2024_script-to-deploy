@@ -8,7 +8,7 @@ name: CI
 on: [push, pull_request]
 
 env:
-  # RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }} # not needed
+  RHINO_TOKEN: ${{ secrets.RHINO_TOKEN }} # needed to run tests
   RETENTION_DAYS: 15
 
 jobs:
@@ -42,6 +42,13 @@ jobs:
         $file=$path.Name
         "file=$file" >> $env:GITHUB_OUTPUT
         "path=$path" >> $env:GITHUB_OUTPUT
+
+    - name: 🧪 test
+      run: |
+        Set-Location -Path D:\a\acadia_2024_script-to-deploy\acadia_2024_script-to-deploy\tests
+        dotnet restore
+        dotnet build --no-restore
+        dotnet test --no-build --verbosity normal --framework -f "net7.0-windows"
 
     - name: 🎁 artifact
       uses: actions/upload-artifact@v4.4.3
