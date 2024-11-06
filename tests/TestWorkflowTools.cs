@@ -34,7 +34,7 @@ namespace WorkflowToolsNUnitTests
 
             Assert.DoesNotThrow(() =>
             {
-                using (RhinoDoc d = RhinoDoc.OpenHeadless(modelPath))
+                using (RhinoDoc doc = RhinoDoc.OpenHeadless(modelPath))
                 {
                     // Do document things
                     var hatches = doc.Objects.FindByObjectType(Rhino.DocObjects.ObjectType.Hatch);
