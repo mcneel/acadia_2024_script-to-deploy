@@ -19,35 +19,13 @@ namespace WorkflowToolsNUnitTests
             LoadLanguages();
         }
 
-        sealed class TestContextStatusResponder : ProgressStatusResponder
-        {
-            public override void LoadProgressChanged(LanguageLoadProgressReport value)
-            {
-                if (value.IsComplete)
-                    TestContext.Progress.WriteLine($"Loading Languages Complete");
-                else
-                    TestContext.Progress.WriteLine($"Loading {value.Spec} ...");
-            }
-
-            public override void StatusChanged(ILanguage language, ProgressChangedEventArgs args)
-            {
-                // e.g.
-                // Initializing Python 3.9.10: 6% - Deploying runtime
-                int progress = Convert.ToInt32(language.Status.Progress.Value * 100);
-                if (progress < 100)
-                    TestContext.Progress.WriteLine($"Initializing {language.Id.Name} {language.Id.Version}: {progress,3}% - {language.Status.Progress.Message}");
-                else
-                    TestContext.Progress.WriteLine($"Initializing {language.Id.Name} {language.Id.Version}: Complete");
-            }
-        }
-
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         static void LoadLanguages()
         {
             Registrar.StartScripting();
 
             RhinoCode.ReportProgressToConsole = true;
-            RhinoCode.Languages.WaitStatusComplete(LanguageSpec.Any, new TestContextStatusResponder());
+            RhinoCode.Languages.WaitStatusComplete(LanguageSpec.Any);
             foreach (ILanguage language in RhinoCode.Languages)
             {
                 if (language.Status.IsErrored)

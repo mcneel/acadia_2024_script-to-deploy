@@ -20,6 +20,11 @@ namespace WorkflowToolsNUnitTests
             string zipPath = Path.Combine(refPath, @"24.11.05_MasterplanBuildings_Start.3dm.zip");
 
             string filesPath = Path.Combine(output, @"..\..\..\..\ref\files");
+            if (Directory.Exists(filesPath))
+            {
+                Directory.Delete(filesPath, true);
+            }
+            
             System.IO.Compression.ZipFile.ExtractToDirectory(zipPath, filesPath);
 
             string modelPath = Path.Combine(filesPath, @"24.11.05_MasterplanBuildings_Start.3dm");
