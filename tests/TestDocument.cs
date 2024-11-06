@@ -38,8 +38,8 @@ namespace WorkflowToolsNUnitTests
             var userStringCount = hatch.Attributes.GetUserStrings().Count;
 
             Assert.AreEqual(0, userStringCount, "Does the sample model have user strings before Calculate Metrics?");
-            Assert.DoesNotThrow(() => RhinoApp.RunScript("WT_CalculateMetrics", false), "Does WT_CalculateMetrics run without error?");
-            //Assert.DoesNotThrow(() => RhinoApp.InvokeOnUiThread(new Action(() => RhinoApp.RunScript("WT_CalculateMetrics", false))));
+            //Assert.DoesNotThrow(() => RhinoApp.RunScript("WT_CalculateMetrics", false), "Does WT_CalculateMetrics run without error?");
+            Assert.DoesNotThrow(() => RhinoApp.InvokeAndWait(new Action(() => RhinoApp.RunScript("WT_CalculateMetrics", false))), "Does WT_CalculateMetrics run without error?");
             Assert.IsTrue(hatch.Attributes.GetUserStrings().Count > 0, "Does the sample model have user strings after Calculate Metrics?");
 
         }
