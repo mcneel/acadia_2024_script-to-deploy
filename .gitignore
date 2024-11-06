@@ -1,3 +1,7 @@
 .DS_Store
 build
 __MACOSX
+tests/.vs
+tests/bin
+tests/obj
+ref/files
