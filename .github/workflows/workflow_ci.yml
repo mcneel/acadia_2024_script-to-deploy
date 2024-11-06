@@ -42,6 +42,7 @@ jobs:
         $file=$path.Name
         "file=$file" >> $env:GITHUB_OUTPUT
         "path=$path" >> $env:GITHUB_OUTPUT
+        yak install $file
 
     - name: 🧪 test
       run: |
