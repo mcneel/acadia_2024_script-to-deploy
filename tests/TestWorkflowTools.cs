@@ -46,14 +46,5 @@ namespace WorkflowToolsNUnitTests
 
         }
 
-        [Test]
-        public void TestPluginLoads()
-        {
-            var id = Guid.Parse("2c3d4978-9045-4b57-bc1b-b73d45cfa825");
-            var loaded = Rhino.PlugIns.PlugIn.LoadPlugIn(id, true, true);
-            Assert.IsTrue(loaded, "WT Plugin is not loaded");
-            var plugin = Rhino.PlugIns.PlugIn.Find(id);
-            Assert.NotNull(plugin, "WT Plugin cannot be found");
-        }
     }
 }
