@@ -7,9 +7,9 @@ This workshop will introduce the Code Editor in Rhino 8 - a new framework design
 
 ## Workshop Tutors
 
-| <img src="docs/img/esther.png" alt="esther" width="100" height="100">  | <img src="docs/img/ivana.png" alt="ivana" width="100" height="100"> | <img src="docs/img/jeffrey.png" alt="jeffrey" width="100" height="100"> | <img src="docs/img/ehsan.png" alt="ehsan" width="100" height="100"> | <img src="docs/img/luis.png" alt="luis" width="100" height="100"> |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-| [Esther Rubio Madroñal (Grimshaw)](https://www.linkedin.com/in/esther-rubio-madro%C3%B1al-275776129/) | [Ivana Petrusevski (Grimshaw)](https://www.linkedin.com/in/ivana-petrusevski-77a84b121/) | [Jeffrey Moser (Grimshaw)](https://www.linkedin.com/in/jeffrey-moser-823b39135/) | [Ehsan Iran-Nejad (McNeel)](https://www.linkedin.com/in/eirannejad/) | [Luis E. Fraguada (McNeel)](https://www.linkedin.com/in/fraguada/) |
+| <img src="docs/img/esther.png" alt="esther" width="100" height="100">  | <img src="docs/img/ivana.png" alt="ivana" width="100" height="100"> | <img src="docs/img/jeffrey.png" alt="jeffrey" width="100" height="100"> | <img src="docs/img/eve.png" alt="eve" width="100" height="100"> | <img src="docs/img/ehsan.png" alt="ehsan" width="100" height="100"> | <img src="docs/img/luis.png" alt="luis" width="100" height="100"> |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| [Esther Rubio Madroñal (Grimshaw)](https://www.linkedin.com/in/esther-rubio-madro%C3%B1al-275776129/) | [Ivana Petrusevski (Grimshaw)](https://www.linkedin.com/in/ivana-petrusevski-77a84b121/) | [Jeffrey Moser (Grimshaw)](https://www.linkedin.com/in/jeffrey-moser-823b39135/) | [Eve Tobey (Grimshaw)](https://www.linkedin.com/in/eve-tobey-213065159/) | [Ehsan Iran-Nejad (McNeel)](https://www.linkedin.com/in/eirannejad/) | [Luis E. Fraguada (McNeel)](https://www.linkedin.com/in/fraguada/) |
 
 ​
 ## Project
@@ -20,7 +20,7 @@ The toolkit contains the following scripts:
 
 - [**WT_CalculateMetrics.gh**](src/commands/WT_CalculateMetrics.gh) - This GH definition reads obejcts from the current model, organizes them, calculates certain metrics like GFA, and then populates the object's user strings with these metrics. Finally the objects are updated in the Rhino model.
 - [**WT_GenerateLayouts.cs**](src/commands/WT_GenerateLayouts.cs) - This script generates a layout with two details for each Zone and Plot in the reference 3d model. Some of the functionality of this script is referenced from a library called [WT_LayoutTools.cs](src/libraries/layout/WT_LayoutTools.cs)
-- [**WT_ExportCSV.gh**](src/commands/WT_ExportToCSV.gh) - This GH definition exports a csv file with the object user strings from the reference model.
+- [**WT_ExportXLSX.gh**](src/commands/WT_ExportToXLSX.gh) - This GH definition exports a csv file with the object user strings from the reference model.
 - [**WT_PrintLayouts.cs**](src/commands/WT_PrintLayouts.cs) - This script prints all of the existing layouts in the current file to one PDF. Depends on functionality in [WT_LayoutTools.cs](src/libraries/layout/WT_LayoutTools.cs) 
 - [**WT_LayoutTools**](src/libraries/layout/WT_LayoutTools.cs) - A library containing some of the functionality used by the scripts in the toolkit.
 - [**WT_DeleteAllUserStrings.py**](src/commands/WT_DeleteAllUserStrings.py) - As the name suggests, this script deletes all of the user strings on all of the objects in the current model.
