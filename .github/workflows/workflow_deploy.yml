@@ -40,7 +40,7 @@ jobs:
       uses: actions/checkout@v4.2.2
 
     - name: 🦏 Install Rhino
-      uses: mcneel/setup-rhino3d@v1.0.0
+      uses: mcneel/setup-rhino3d@v2
       id: setup_rhino
       with:
         email-address: ${{ secrets.EMAIL_ADDRESS }}
